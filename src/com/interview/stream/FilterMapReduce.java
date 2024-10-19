@@ -23,7 +23,7 @@ public class FilterMapReduce {
         int sumOfSquares = numbers.stream()
                 .filter(n -> n % 2 == 0)  // Filter even numbers
                 .map(n -> n * n)          // Square them
-                .reduce(0, Integer::sum);  // Sum the squares
+                .reduce(0, (a, b)->a+b);  // Sum the squares
 
         System.out.println(sumOfSquares);  // Output: 56
     }
