@@ -18,13 +18,13 @@ public class ConnectionHelper {
                 .collect(Collectors.toSet());
     }
 
-    public List<Connection> represent(Set<String> set) {
+    public <T> List<Connection> represent(Set<T> set) {
         if (set==null || set.isEmpty()) return Collections.emptyList();
         List<Connection> result = new ArrayList<>();
-        for (String i : set) {
-            for (String j : set) {
+        for (T i : set) {
+            for (T j : set) {
                 if (!i.equals(j)) {
-                    result.add(new Connection(i, j));
+                    result.add(new Connection(i.toString(), j.toString()));
                 }
             }
         }

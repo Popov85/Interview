@@ -1,6 +1,7 @@
 package com.interview.stream;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -63,7 +64,7 @@ public class ToMapCollector {
     }
 
     public static void main(String[] args) {
-        new ToMapCollector().call2();
+        new ToMapCollector().task();
     }
 
     /**
@@ -116,12 +117,23 @@ public class ToMapCollector {
                 2, List.of(3L, 4L)
         );
 
+        // Create the resulting map
+        Map<Long, Integer> transformedMap = new HashMap<>();
+
+        // Iterate over the multimap
+        multimap.forEach((key, values) -> {
+            // For each value in the list, put it into the new map
+            values.forEach(value -> transformedMap.put(value, key));
+        });
+
+        System.out.println("transformedMap: " + transformedMap);
+
         // Flattening the map values into a single list
         var newMap = multimap.entrySet().stream().flatMap((e)-> {
             Integer key = e.getKey();
             List<Long> value = e.getValue();
             List<Map.Entry<Long, Integer>> collect =
-                    value.stream().map(v -> Map.entry(v, e.getKey())).collect(Collectors.toList());
+                    value.stream().map(v -> Map.entry(v, key)).collect(Collectors.toList());
             return collect.stream();
         }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
